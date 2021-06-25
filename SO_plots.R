@@ -68,14 +68,14 @@ first_fig_shuram <- ggplot(data = solong, aes(x= values, y = height)) +
                          labeller = label_parsed, switch = "x") + #facet grid labelparsed pretty labels (bottom)
   ggplot2:: geom_point(data = solong, aes(shape = prim_min), size = 3) + 
   scale_color_manual(values = c("orange", "red", "#56B4E9")) + 
-  bw_shortcut + theme(title = element_text(size =10), text = element_text(family ="serif"), 
-        strip.background = element_blank(), strip.text = element_text(size = 12), strip.placement = "outside", 
+  bw_shortcut + theme(title = element_blank(), text = element_text(family ="serif"), 
+        strip.background = element_blank(), strip.text = element_text(size = 18), strip.placement = "outside", 
         legend.title= element_blank(), panel.border = element_rect(size = 1.5) ) +
-  scale_x_continuous(name = element_blank()) + scale_y_continuous(name = element_blank(), 
-                                                                  breaks = seq(0, 1000, by = 100))
+  scale_x_continuous(name = element_blank()) + scale_y_continuous(name = element_blank(),
+                                                                  breaks = seq(300, 1000, by = 100))
 
 #save as svg
-ggsave("plot1experment.svg", first_fig_shuram, height= 5, width = 12)
+ggsave("d13c_mainfig_shuram.svg", first_fig_shuram, height= 5.5, width = 15)
 
 
 
@@ -177,7 +177,8 @@ second_slide <- ggplot(data = dataSO, aes(x=d44, y = stab, color = height)) +
   scale_color_gradientn(colors = wes_palette(name = "Zissou1"))
 
 
-ggsave( "secondslide.svg", second_slide, height= 6, width = 8.5)
+
+ggsave( "SrvCa_Shuram_minerology.svg", second_slide, height= 6, width = 8.5)
 
 
 

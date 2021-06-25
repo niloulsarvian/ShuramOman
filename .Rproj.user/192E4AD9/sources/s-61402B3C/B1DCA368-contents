@@ -177,6 +177,7 @@ second_slide <- ggplot(data = dataSO, aes(x=d44, y = stab, color = height)) +
   scale_color_gradientn(colors = wes_palette(name = "Zissou1"))
 
 
+
 ggsave( "SrvCa_Shuram_minerology.svg", second_slide, height= 6, width = 8.5)
 
 
