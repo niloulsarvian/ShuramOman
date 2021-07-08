@@ -36,7 +36,7 @@ bw_shortcut <- theme_bw() + theme(panel.grid.major = element_blank(),
 
 
 #subset dataframe to be only what i want
-dataSO <- rawdata[-c(25:29),c(1:7,13,31,44,52:57)]
+dataSO <- rawdata[-c(25:29),c(1:7,13,30,43,51:56)]
 as.data.frame(dataSO)
 
 #renamed data frame to easier column names
