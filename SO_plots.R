@@ -36,7 +36,7 @@ bw_shortcut <- theme_bw() + theme(panel.grid.major = element_blank(),
 
 
 #subset dataframe to be only what i want
-dataSO <- rawdata[-c(25:29),c(1:7,13,30,43,51:56)]
+dataSO <- rawdata[-c(25:29),c(1:7,13,31,44,52:57)]
 as.data.frame(dataSO)
 
 #renamed data frame to easier column names
@@ -46,10 +46,11 @@ names(dataSO) <- c("sampleID","names", "formation", "minerology", "height", "d13
 
 factor(dataSO$formation, levels = c("Khufai", "Shuram", "Shuram/Buah", "Buah"))
 factor(dataSO$minerology, levels = c("Calcite", "Dolomite"))
-factor(dataSO$prim_min, levels = c("Primary Aragonite", "Primary Calcite", "Dolomite"))
+factor(dataSO$prim_min, levels = c("Primary Aragonite", "Primary Calcite", "Dolomite", ""))
 
 solong <- tidyr::pivot_longer(data = dataSO, c("d13c", "d18o","rad", "stab", "d44"), 
                               names_to = "parameter", values_to = "values", values_drop_na = TRUE)
+View(dataSO)
 solong$parameter_f <- factor(solong$parameter, levels = c("d13c", "d18o","rad", "stab", 
                                                           "d44", "height", "minerology"),
                                labels = c(paste("δ^{13}*C*",expression(paste("  (VPDB, ‰)"))),
@@ -78,6 +79,8 @@ first_fig_shuram <- ggplot(data = solong, aes(x= values, y = height)) +
 ggsave("d13c_mainfig_shuram.svg", first_fig_shuram, height= 5.5, width = 15)
 
 
+#dataSO_Srnormalized <- dataSO[-19,]
+#dataSO_Srnormalized <- dataSO_Srnormalized[-18,]
 
 #individual data
 # d13C
@@ -95,7 +98,7 @@ ggplot(data = dataSO, aes( x =rad, y = height)) + geom_point(size = 3) + bw_shor
   labs(y = "Height (m)", x = expression(""^{87}*Sr*"/"^{86}*Sr))
 
 #stab
-ggplot(data = dataSO_Srnormalized, aes( x =stab, y = height, color = Srconc)) + geom_point(size = 3) + bw_shortcut+
+ggplot(data = dataSO, aes( x =stab, y = height, color = Srconc)) + geom_point(size = 3) + bw_shortcut+
   scale_color_gradientn(colors = wes_palette(name = "Zissou1", n =5))+ 
   labs(y = "Height (m)", x = expression(δ^{88/86}*Sr))
 
@@ -105,7 +108,7 @@ ggplot(data = dataSO, aes( x =d44, y = height)) + geom_point(size = 3) + bw_shor
   labs(y = "Height (m)", x = expression(δ^{44/40}*Ca))
 
 #Sr conc
-ggplot(data = dataSO_Srnormalized, aes( x =Srconc, y = height)) + geom_point(size = 3) + bw_shortcut+
+ggplot(data = dataSO, aes( x =Srconc, y = height)) + geom_point(size = 3) + bw_shortcut+
   scale_color_gradientn(colors = wes_palette(name = "Zissou1", n =5))+ 
   labs(y = "Height (m)", x = expression(Sr))
 
@@ -135,14 +138,12 @@ ggplot(data = dataSO, aes(x=d44, y = stab, color = rad)) + geom_point() +
 
 
 
-#dataSO_Srnormalized <- dataSO[-19,]
-#dataSO_Srnormalized <- dataSO_Srnormalized[-18,]
 
 ggplot(data = dataSO, aes(x=d44, y = stab, color = height)) + 
   geom_point(size =3, data = dataSO, aes(shape=minerology)) +
   scale_x_continuous(name = expression(delta^{44/40}*Ca~("SW,‰"))) + 
   scale_y_continuous(name = expression(delta^{88/86}*Sr~("NIST 987, ‰"))) +
-  #geom_smooth(method = 'lm', se = FALSE) + 
+  geom_smooth(method = 'lm', se = FALSE) + 
   bw_shortcut + 
   theme (panel.border = element_rect(size = 1.5) ) + 
   scale_color_gradientn(colors = wes_palette(name = "Zissou1"))
@@ -160,7 +161,7 @@ dataSO_filter3 <- dataSO[dataSO$minerology == "Calcite", ]
 dataSO_filter4 <- dataSO[dataSO$minerology == "Dolomite", ]
 ggplot(data = dataSO_filter2, aes(x=d44, y = stab, color = rad)) + geom_point(size =4, data = dataSO_filter2, aes(shape=minerology))
 
-
+View(dataSO)
 
 # Main Cross Plot Figure (Sr vs Ca with height colored and minerology as shape --------
 ######## second slide #########
@@ -175,7 +176,7 @@ second_slide <- ggplot(data = dataSO, aes(x=d44, y = stab, color = height)) +
   bw_shortcut + 
   theme (panel.border = element_rect(size = 1.5)) + 
   scale_color_gradientn(colors = wes_palette(name = "Zissou1"))
-
+#there is something wrong with the shape minerology 
 
 
 ggsave( "SrvCa_Shuram_minerology.svg", second_slide, height= 6, width = 8.5)
