@@ -193,13 +193,13 @@ dataSO_filter10 <- dataSO[dataSO$stab > 0 & dataSO$stab < 2 & dataSO$d44 < 0 & "
 #second_slide <-
   
 
-ggplot(data = dataSO_filter10, aes(x= d44, y = stab, color = MnSr_calced)) + 
+ggplot(data = dataSO_filter10, aes(x= d44, y = stab, color = d13c)) + 
   geom_point(size =5, data = dataSO_filter10, aes(shape=prim_min)) +
   scale_x_continuous(name = expression(delta^{44/40}*Ca~("SW,‰"))) + 
   #scale_x_continuous(name = expression(NULL^{87}*Sr/NULL^{86}*Sr)) + 
   scale_y_continuous(name = expression(delta^{88/86}*Sr~("NIST 987, ‰"))) +
   bw_shortcut + theme (legend.title = element_text(size=14)) + 
-  labs(shape="Primary Minerology", color="Mn/Sr (ppm/ppm)") +
+  labs(shape="Primary Minerology", color="d13c") +
   theme (panel.border = element_rect(size = 1.5)) + 
   scale_color_gradientn(colors = wes_palette(name = "Zissou1"))
 
